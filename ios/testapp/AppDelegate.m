@@ -11,6 +11,8 @@
 #import <EXSplashScreen/EXSplashScreenService.h>
 #import <UMCore/UMModuleRegistryProvider.h>
 
+#import <ReactNativeNavigation/ReactNativeNavigation.h>
+
 #if defined(FB_SONARKIT_ENABLED) && __has_include(<FlipperKit/FlipperClient.h>)
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -44,19 +46,8 @@ static void InitializeFlipper(UIApplication *application) {
 #if defined(FB_SONARKIT_ENABLED) && __has_include(<FlipperKit/FlipperClient.h>)
   InitializeFlipper(application);
 #endif
-  
-  self.moduleRegistryAdapter = [[UMModuleRegistryAdapter alloc] initWithModuleRegistryProvider:[[UMModuleRegistryProvider alloc] init]];
-  self.launchOptions = launchOptions;
-  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-  #ifdef DEBUG
-    [self initializeReactNativeApp];
-  #else
-    EXUpdatesAppController *controller = [EXUpdatesAppController sharedInstance];
-    controller.delegate = self;
-    [controller startAndShowLaunchScreen:self.window];
-  #endif
 
-  [super application:application didFinishLaunchingWithOptions:launchOptions];
+  [ReactNativeNavigation bootstrapWithDelegate:self launchOptions:launchOptions];
 
   return YES;
 }
@@ -77,7 +68,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (NSArray<id<RCTBridgeModule>> *)extraModulesForBridge:(RCTBridge *)bridge
 {
-  NSArray<id<RCTBridgeModule>> *extraModules = [_moduleRegistryAdapter extraModulesForBridge:bridge];
+  NSArray<id<RCTBridgeModule>> *extraModules = [ReactNativeNavigation extraModulesForBridge:bridge];
   // If you'd like to export some custom RCTBridgeModules that are not Expo modules, add them here!
   return extraModules;
 }
