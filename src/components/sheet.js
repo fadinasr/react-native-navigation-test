@@ -2,8 +2,13 @@ import React, {useState} from 'react';
 import styled from 'styled-components/native';
 import Parent from "./parent";
 import {Navigation} from "react-native-navigation";
+import useForceUpdate from "./useForceUpdate";
+
+const newValue = () => Object.create(null);
 
 export default function Sheet(props) {
+  const forceUpdate = useForceUpdate();
+
   const Container = styled.View`
     flex: 1;
     background-color: #fff;
@@ -54,6 +59,9 @@ export default function Sheet(props) {
   let handlePress = async () => {
     if (validateFields({text: selected})) {
       await Navigation.dismissAllModals();
+    } else {
+      // Should rerender
+      forceUpdate();
     }
   }
 
