@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Navigation} from "react-native-navigation";
 import styled from 'styled-components/native';
+import useForceUpdate from "./src/components/useForceUpdate";
 
 export default function App() {
   const [data, setData] = useState([]);

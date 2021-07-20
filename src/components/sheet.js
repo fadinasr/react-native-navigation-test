@@ -54,8 +54,6 @@ export default function Sheet(props) {
     });
   };
 
-  console.log(props.data, 'test')
-
   // Submit Form Mockup
   let handlePress = async () => {
     if (validateFields({text: selected})) {
