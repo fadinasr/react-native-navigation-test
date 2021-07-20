@@ -2,9 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {Navigation} from "react-native-navigation";
 import styled from 'styled-components/native';
 import useForceUpdate from "./src/components/useForceUpdate";
+import ItemsCounter from "./src/components/itemsCounter";
+import RandomColorCount from "./src/components/randomColorCount";
+import SmokingNotebookStats from "./src/components/smokingStats";
 
 export default function App() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(['test', 'test2', 'test3']);
+  const forceUpdate = useForceUpdate();
 
   let openSheet = () => {
     Navigation.showModal({
@@ -52,6 +56,10 @@ export default function App() {
     margin-top: 50px;
   `;
 
+  Navigation.events().registerModalDismissedListener(({ componentId, componentName, passProps }) => {
+    forceUpdate();
+  });
+
   return (
     <Container>
       <Button onPress={openSheet}>
@@ -59,9 +67,10 @@ export default function App() {
       </Button>
       <DataContainer>
         {
-          data.map(item => <ButtonText>{item}</ButtonText>)
+          data.map(item => <ButtonText key={item}>{item}</ButtonText>)
         }
       </DataContainer>
+      <SmokingNotebookStats data={data}/>
     </Container>
   );
 }
