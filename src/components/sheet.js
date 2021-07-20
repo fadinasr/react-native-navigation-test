@@ -19,7 +19,6 @@ export default function Sheet(props) {
   const Text = styled.Text`
    font-size: 16px;
    color: ${props => props.selected ? '#000' : '#A9ACB4'};
-   fontFamily: Averta-Regular;
    width: 92%;
 `;
 
@@ -55,9 +54,17 @@ export default function Sheet(props) {
     });
   };
 
+  console.log(props.data, 'test')
+
   // Submit Form Mockup
   let handlePress = async () => {
     if (validateFields({text: selected})) {
+      let tempArray = props.data;
+
+      tempArray.push(selected);
+
+      props.setData(tempArray);
+
       await Navigation.dismissAllModals();
     } else {
       // Should rerender

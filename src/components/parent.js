@@ -19,12 +19,11 @@ export default function Parent(props) {
     font-size: 18px;
   `
   const TickIcon = styled.Text`
-  resize-mode: contain;
-  width: 10%;
-  margin-top: 5%;
-  margin-right: 2%;
-  height: 25px;
-`;
+    width: 10%;
+    margin-top: 5%;
+    margin-right: 2%;
+    height: 25px;
+  `;
   const ActionButton = styled.TouchableOpacity`
   margin-top: 4.5%;
   width: 50px;

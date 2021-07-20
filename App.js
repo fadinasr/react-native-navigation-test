@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Navigation} from "react-native-navigation";
 import styled from 'styled-components/native';
 
 export default function App() {
+  const [data, setData] = useState([]);
 
   let openSheet = () => {
     Navigation.showModal({
@@ -10,6 +11,10 @@ export default function App() {
         children: [{
           component: {
             name: 'Sheet',
+            passProps: {
+              data,
+              setData
+            },
             options: {
               topBar: {
                 title: {
@@ -31,11 +36,19 @@ export default function App() {
   `;
 
   const Button = styled.TouchableOpacity`
-    
+    border-color: #faf;
+    border-width: 1px;
+    width: 200px;
+    align-items: center;
   `;
 
   const ButtonText = styled.Text`
     color: #000;
+  `;
+
+  const DataContainer = styled.View`
+    display: flex;
+    margin-top: 50px;
   `;
 
   return (
@@ -43,6 +56,11 @@ export default function App() {
       <Button onPress={openSheet}>
         <ButtonText>Test</ButtonText>
       </Button>
+      <DataContainer>
+        {
+          data.map(item => <ButtonText>{item}</ButtonText>)
+        }
+      </DataContainer>
     </Container>
   );
 }
